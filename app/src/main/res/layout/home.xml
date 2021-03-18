@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#6AB7FF"
-    android:backgroundTint="#29B6F6">
+    android:backgroundTint="#6ab7ff">
 
     <include
         layout="@layout/title_layout"

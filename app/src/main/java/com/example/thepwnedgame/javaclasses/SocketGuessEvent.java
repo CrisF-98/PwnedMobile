@@ -1,5 +1,6 @@
 package com.example.thepwnedgame.javaclasses;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SocketGuessEvent extends SocketEventImpl implements GuessEvent{
@@ -12,7 +13,7 @@ public class SocketGuessEvent extends SocketEventImpl implements GuessEvent{
 
 
 
-    public SocketGuessEvent(String name, JSONObject data) {
+    public SocketGuessEvent(String name, JSONObject data) throws JSONException {
         super(name, data);
         if(!name.equals("guess")) {
             throw new IllegalArgumentException("event is not guess");
@@ -25,7 +26,7 @@ public class SocketGuessEvent extends SocketEventImpl implements GuessEvent{
         this.score = json.getInt("score");
     }
 
-    public SocketGuessEvent(SocketEvent event){
+    public SocketGuessEvent(SocketEvent event) throws JSONException {
         this(event.getName(), event.getObjectAsJSON());
     }
 

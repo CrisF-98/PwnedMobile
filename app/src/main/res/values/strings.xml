@@ -11,4 +11,8 @@
     <string name="leaderboards">LEADERBOARDS</string>
     <string name="statistics">STATISTICS</string>
     <string name="home">HOME</string>
+    <string name="password1">Password1</string>
+    <string name="first_password">First Password</string>
+    <string name="password_text">Password Text</string>
+    <string name="password_strength">Password Strength</string>
 </resources>

@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.password_fragment_layout);
         TextView home_put = findViewById(R.id.title_PUT);
         home_put.setSelected(true);
     }
