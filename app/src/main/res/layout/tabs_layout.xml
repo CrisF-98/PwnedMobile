@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.tabs.TabLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="bottom">
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/home_tab"
+        android:text="@string/home"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"/>
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/leaderboards_tab"
+        android:text="@string/leaderboards"
+        app:tabTextColor="@color/white"/>
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stats_tab"
+        android:text="@string/statistics"
+        app:tabTextColor="@color/white"/>
+
+</com.google.android.material.tabs.TabLayout>
