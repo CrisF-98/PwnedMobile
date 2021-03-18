@@ -15,4 +15,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="minHeight">32dip</item>
+        <item name="maxHeight">32dip</item>
+        <item name="colorControlActivated">@color/black</item>
+    </style>
 </resources>

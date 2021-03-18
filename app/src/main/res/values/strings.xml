@@ -15,4 +15,7 @@
     <string name="first_password">First Password</string>
     <string name="password_text">Password Text</string>
     <string name="password_strength">Password Strength</string>
+    <string name="score">Score</string>
+    <string name="_0">0</string>
+    <string name="time_remaining">Time Remaining</string>
 </resources>

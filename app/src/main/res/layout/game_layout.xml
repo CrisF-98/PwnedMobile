@@ -7,13 +7,36 @@
     android:background="?colorPrimaryVariant"
     >
 
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="@string/score"
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreNumber"
+        android:text="@string/_0"
+        android:textSize="22dp"
+        android:fontFamily="@font/press_start_2p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scoreTextView"
+        android:layout_margin="5dp"
+        />
+
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/firstPasswordFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline3"
         android:background="?colorSurface"
         />
 
@@ -27,4 +50,62 @@
         android:layout_marginTop="10dp"
         android:background="?colorSecondaryVariant"/>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/underSecondPassGuideline"
+        app:layout_constraintTop_toBottomOf="@id/secondPasswordFragment"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeTextView"
+        android:textSize="20dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="@string/time_remaining"
+        app:layout_constraintTop_toBottomOf="@id/underSecondPassGuideline"
+        android:layout_margin="20dp"
+        />
+
+    <!-- TODO: Countdown timer per scorrerla
+     https://stackoverflow.com/questions/10241633/android-progressbar-countdown -->
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="100"
+        app:layout_constraintTop_toBottomOf="@id/timeTextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        style="@style/CustomProgressBar"
+        android:max="100"
+        android:layoutDirection="rtl"
+        android:id="@+id/progressBar"
+        android:theme="@style/CustomProgressBar"
+        />
+
+    <TextView
+        android:id="@+id/game_PUT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:text="@string/title_PUT"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
