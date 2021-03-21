@@ -10,8 +10,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.password_fragment_layout);
-        TextView home_put = findViewById(R.id.title_PUT);
-        home_put.setSelected(true);
+        setContentView(R.layout.activity_main);
+        Utilities.insertFragment(this, new HomeFragment(), "Main Fragment", R.id.mainActivityFragment);
+        /**TextView home_put = findViewById(R.id.title_PUT);
+        home_put.setSelected(true);*/
     }
 }

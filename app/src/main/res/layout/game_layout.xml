@@ -85,6 +85,8 @@
         app:layout_constraintTop_toBottomOf="@id/timeTextView"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         style="@style/CustomProgressBar"
         android:max="100"
         android:layoutDirection="rtl"
