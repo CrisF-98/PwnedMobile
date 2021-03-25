@@ -1,4 +1,4 @@
-package com.example.thepwnedgame.javaclasses;
+package com.example.thepwnedgame;
 
 import org.json.JSONObject;
 

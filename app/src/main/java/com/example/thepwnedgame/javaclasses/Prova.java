@@ -1,9 +1,12 @@
 package com.example.thepwnedgame.javaclasses;
 
 
+import com.example.thepwnedgame.SocketEvent;
+import com.example.thepwnedgame.SocketEventImpl;
+
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
