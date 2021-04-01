@@ -11,7 +11,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.socketevents.SocketEventImpl;
+import com.example.thepwnedgame.socketevents.SocketGuessEvent;
+import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
@@ -45,5 +48,17 @@ public class Utilities {
         } catch (InterruptedException | ClassCastException e){
             e.printStackTrace();
         }
+    }
+
+    public static void eventHandlerGuess(String name, BlockingQueue<SocketEvent> queue, PasswordViewModel passwordViewModelOne, PasswordViewModel passwordViewModelTwo, Object... args) throws JSONException {
+        SocketGuessEvent event = new SocketGuessEvent(name, (JSONObject) args[0]);
+        try{
+            queue.put(event);
+        } catch (InterruptedException | ClassCastException e){
+            e.printStackTrace();
+        }
+        passwordViewModelOne.setPassword(event.getFirstPassword());
+        passwordViewModelTwo.setValue(event.getFirstValue());
+        passwordViewModelTwo.setPassword(event.getSecondPassword());
     }
 }
