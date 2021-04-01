@@ -1,4 +1,4 @@
-package com.example.thepwnedgame.javaclasses;
+package com.example.thepwnedgame.socketevents;
 
 public interface GuessEvent {
     String getFirstPassword();

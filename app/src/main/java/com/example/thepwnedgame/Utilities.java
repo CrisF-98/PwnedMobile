@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.thepwnedgame.socketevents.SocketEvent;
+import com.example.thepwnedgame.socketevents.SocketEventImpl;
+
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;

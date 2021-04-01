@@ -1,6 +1,4 @@
-package com.example.thepwnedgame;
-
-import com.example.thepwnedgame.SocketEvent;
+package com.example.thepwnedgame.socketevents;
 
 import org.json.JSONObject;
 

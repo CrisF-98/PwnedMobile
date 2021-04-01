@@ -1,8 +1,10 @@
 package com.example.thepwnedgame.javaclasses;
 
 
-import com.example.thepwnedgame.SocketEvent;
-import com.example.thepwnedgame.SocketEventImpl;
+import com.example.thepwnedgame.socketevents.GuessEvent;
+import com.example.thepwnedgame.socketevents.SocketEvent;
+import com.example.thepwnedgame.socketevents.SocketEventImpl;
+import com.example.thepwnedgame.socketevents.SocketGuessEvent;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;

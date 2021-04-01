@@ -1,12 +1,9 @@
-package com.example.thepwnedgame.javaclasses;
-
-import com.example.thepwnedgame.SocketEvent;
-import com.example.thepwnedgame.SocketEventImpl;
+package com.example.thepwnedgame.socketevents;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SocketGuessEvent extends SocketEventImpl implements GuessEvent{
+public class SocketGuessEvent extends SocketEventImpl implements GuessEvent {
 
     private final String firstPassword;
     private final String secondPassword;

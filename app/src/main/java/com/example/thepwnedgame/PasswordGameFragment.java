@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class PasswordGameFragment extends Fragment {
+public class PasswordGameFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -18,10 +18,16 @@ public class PasswordGameFragment extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    //TODO: mettere i testi giusti al fragment --> ViewModel
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView put = getView().findViewById(R.id.game_PUT);
-        Utilities.startMarquee(getView().getContext(), put, R.anim.marquee);
+
+    }
+
+    //TODO: settare l'onclick al fragment per inviare l'answer
+    @Override
+    public void onClick(View v) {
+
     }
 }
