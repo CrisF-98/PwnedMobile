@@ -32,8 +32,10 @@
 
     <!-- TODO: settare i fragment a una percentuale -->
     <androidx.fragment.app.FragmentContainerView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:id="@+id/firstPasswordFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,8 +44,10 @@
         />
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:id="@+id/secondPasswordFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

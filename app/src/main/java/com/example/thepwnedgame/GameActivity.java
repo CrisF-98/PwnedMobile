@@ -6,10 +6,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
+import com.example.thepwnedgame.viewmodel.ScoreViewModel;
 
 import org.json.JSONException;
 
@@ -25,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
     private Socket socket;
     private BlockingQueue<SocketEvent> eventQueue;
     private PasswordViewModel passOneViewModel;
-    private PasswordViewModel passTwoViewModel;
+    private ScoreViewModel scoreViewModel;
 
     @Override
     protected void onStart(){
@@ -45,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
         }
         //creazione dei viewmodel
         this.passOneViewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
-        this.passTwoViewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+        this.scoreViewModel = new ViewModelProvider(this).get(ScoreViewModel.class);
 
         this.eventQueue = new LinkedBlockingQueue<>();
         //connessione alla socket
@@ -54,16 +56,28 @@ public class GameActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
         //creazione degli handler
         socket.on("guess", sArgs -> {
             try {
-                Utilities.eventHandlerGuess("guess", eventQueue, this.passOneViewModel, this.passTwoViewModel, sArgs);
+                Utilities.eventHandlerGuess("guess", eventQueue, this.passOneViewModel, this.scoreViewModel,  sArgs);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         });
         socket.on("on-error", sArgs -> Utilities.eventHandler("on-error", eventQueue, sArgs));
         socket.on("game-end", sArgs -> Utilities.eventHandler("game-end", eventQueue, sArgs));
+
+        //creazione observer sullo score
+        TextView scoreTextView = findViewById(R.id.scoreNumber);
+        this.scoreViewModel.getScore().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Integer score = Integer.parseInt(scoreTextView.getText().toString());
+                Integer newScore = score + integer;
+                scoreTextView.setText(Integer.toString(newScore));
+            }
+        });
         //connessione della socket
         socket.connect();
         /**

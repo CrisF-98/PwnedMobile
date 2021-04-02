@@ -10,19 +10,26 @@ import androidx.lifecycle.MutableLiveData;
 public class PasswordViewModel extends AndroidViewModel {
 
     private final Application application;
-    private final MutableLiveData<String> password = new MutableLiveData<>();
+    private final MutableLiveData<String> firstPassword = new MutableLiveData<>();
+    private final MutableLiveData<String> secondPassword = new MutableLiveData<>();
     private final MutableLiveData<Integer> value = new MutableLiveData<>();
 
-    public void setPassword(String password){
-        this.password.postValue(password);
+    public void setFirstPassword(String password){
+        this.firstPassword.postValue(password);
     }
+
+    public void setSecondPassword(String password) { this.secondPassword.postValue(password); }
 
     public void setValue(Integer value){
         this.value.postValue(value);
     }
 
-    public LiveData<String> getPassword(){
-        return this.password;
+    public LiveData<String> getFirstPassword(){
+        return this.firstPassword;
+    }
+
+    public LiveData<String> getSecondPassword() {
+        return this.secondPassword;
     }
 
     public LiveData<Integer> getValue(){

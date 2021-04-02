@@ -13,6 +13,7 @@ import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.socketevents.SocketEventImpl;
 import com.example.thepwnedgame.socketevents.SocketGuessEvent;
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
+import com.example.thepwnedgame.viewmodel.ScoreViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,15 +51,16 @@ public class Utilities {
         }
     }
 
-    public static void eventHandlerGuess(String name, BlockingQueue<SocketEvent> queue, PasswordViewModel passwordViewModelOne, PasswordViewModel passwordViewModelTwo, Object... args) throws JSONException {
+    public static void eventHandlerGuess(String name, BlockingQueue<SocketEvent> queue, PasswordViewModel passwordViewModel, ScoreViewModel scoreViewModel, Object... args) throws JSONException {
         SocketGuessEvent event = new SocketGuessEvent(name, (JSONObject) args[0]);
         try{
             queue.put(event);
         } catch (InterruptedException | ClassCastException e){
             e.printStackTrace();
         }
-        passwordViewModelOne.setPassword(event.getFirstPassword());
-        passwordViewModelTwo.setValue(event.getFirstValue());
-        passwordViewModelTwo.setPassword(event.getSecondPassword());
+        passwordViewModel.setFirstPassword(event.getFirstPassword());
+        passwordViewModel.setValue(event.getFirstValue());
+        passwordViewModel.setSecondPassword(event.getSecondPassword());
+        scoreViewModel.setScore(event.getScore());
     }
 }

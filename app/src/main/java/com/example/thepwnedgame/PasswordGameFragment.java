@@ -34,14 +34,13 @@ public class PasswordGameFragment extends Fragment implements View.OnClickListen
         TextView passwordStrength = view.findViewById(R.id.passwordStrengthTextView);
         PasswordViewModel passwordViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PasswordViewModel.class);
 
-        passwordViewModel.getPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                passTextView.setText(s);
-            }
-        });
-
         if(this.getId()==R.id.firstPasswordFragment){
+            passwordViewModel.getFirstPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    passTextView.setText(s);
+                }
+            });
             passwordViewModel.getValue().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
@@ -49,6 +48,12 @@ public class PasswordGameFragment extends Fragment implements View.OnClickListen
                 }
             });
         } else {
+            passwordViewModel.getSecondPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    passTextView.setText(s);
+                }
+            });
             passwordStrength.setText("***");
         }
 
