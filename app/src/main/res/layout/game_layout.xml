@@ -30,7 +30,6 @@
         android:layout_margin="5dp"
         />
 
-    <!-- TODO: settare i fragment a una percentuale -->
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -81,8 +80,7 @@
         android:layout_margin="20dp"
         />
 
-    <!-- TODO: Countdown timer per scorrerla
-     https://stackoverflow.com/questions/10241633/android-progressbar-countdown -->
+
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

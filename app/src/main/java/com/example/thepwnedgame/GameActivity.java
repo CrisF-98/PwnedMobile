@@ -1,8 +1,11 @@
 package com.example.thepwnedgame;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +31,9 @@ public class GameActivity extends AppCompatActivity {
     private BlockingQueue<SocketEvent> eventQueue;
     private PasswordViewModel passOneViewModel;
     private ScoreViewModel scoreViewModel;
+    private ProgressBar progressBar;
+    private CountDownTimer countdown;
+
 
     @Override
     protected void onStart(){
@@ -48,6 +54,9 @@ public class GameActivity extends AppCompatActivity {
         //creazione dei viewmodel
         this.passOneViewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
         this.scoreViewModel = new ViewModelProvider(this).get(ScoreViewModel.class);
+
+
+
 
         this.eventQueue = new LinkedBlockingQueue<>();
         //connessione alla socket
@@ -80,13 +89,25 @@ public class GameActivity extends AppCompatActivity {
         });
         //connessione della socket
         socket.connect();
-        /**
-         * TODO: Codice per scorrere la barra del tempo.
-         * Per mettere in comunicazione GameActivity e Fragment, utilizza ViewModel
-         */
+        //progress bar
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setProgress(100);
+        countdown = new CountDownTimer(10000, 100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("countdown", "tick");
+                progressBar.setProgress((int) (millisUntilFinished/100));
+            }
+
+            @Override
+            public void onFinish() {
+                Log.d("countdown", "countdown over");
+            }
+        };
+
         //start game
         socket.emit("start");
-
+        countdown.start();
     }
 
 }
