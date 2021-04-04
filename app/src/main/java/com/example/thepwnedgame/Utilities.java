@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import io.socket.client.IO;
@@ -26,10 +28,21 @@ import io.socket.client.Socket;
 
 public class Utilities {
 
+    private Socket socket;
+
     static void insertFragment(AppCompatActivity activity, Fragment fragment, String tag, int fragmentId){
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(fragmentId, fragment, tag);
         transaction.commit();
+    }
+
+    static void refreshPasswordFragment(AppCompatActivity activity){
+        List<Fragment> passwordFragmentList = new ArrayList<>();
+        passwordFragmentList.add(activity.getSupportFragmentManager().findFragmentById(R.id.firstPasswordFragment));
+        passwordFragmentList.add(activity.getSupportFragmentManager().findFragmentById(R.id.secondPasswordFragment));
+        for(Fragment singleFragment: passwordFragmentList){
+            activity.getSupportFragmentManager().beginTransaction().detach(singleFragment).attach(singleFragment).commit();
+        }
     }
 
     static void startMarquee(Context context, TextView textView, int marqueeAnimation){
@@ -37,9 +50,8 @@ public class Utilities {
         textView.startAnimation(marquee);
     }
 
-    static Socket createSocket() throws URISyntaxException {
-        final Socket socket;
-        socket = IO.socket("https://pwnedgame.azurewebsites.net/socket/arcade");
+     static Socket createSocket() throws URISyntaxException {
+        Socket socket = IO.socket("https://pwnedgame.azurewebsites.net/socket/arcade");
         return socket;
     }
 
@@ -58,9 +70,9 @@ public class Utilities {
         } catch (InterruptedException | ClassCastException e){
             e.printStackTrace();
         }
-        passwordViewModel.setFirstPassword(event.getFirstPassword());
+        /*passwordViewModel.setFirstPassword(event.getFirstPassword());
         passwordViewModel.setValue(event.getFirstValue());
         passwordViewModel.setSecondPassword(event.getSecondPassword());
-        scoreViewModel.setScore(event.getScore());
+        scoreViewModel.setScore(event.getScore());*/
     }
 }

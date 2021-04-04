@@ -2,6 +2,7 @@ package com.example.thepwnedgame;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,15 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 
-public class PasswordGameFragment extends Fragment implements View.OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import io.socket.client.Socket;
+import okhttp3.internal.Util;
+
+public class PasswordGameFragment extends Fragment {
+
+    private int fragmentNumber;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +44,7 @@ public class PasswordGameFragment extends Fragment implements View.OnClickListen
         PasswordViewModel passwordViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PasswordViewModel.class);
 
         if(this.getId()==R.id.firstPasswordFragment){
+            this.fragmentNumber = 1;
             passwordViewModel.getFirstPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
@@ -48,6 +58,7 @@ public class PasswordGameFragment extends Fragment implements View.OnClickListen
                 }
             });
         } else {
+            this.fragmentNumber = 2;
             passwordViewModel.getSecondPassword().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
@@ -57,11 +68,28 @@ public class PasswordGameFragment extends Fragment implements View.OnClickListen
             passwordStrength.setText("***");
         }
 
-    }
-
-    //TODO: settare l'onclick al fragment per inviare l'answer
-    @Override
-    public void onClick(View v) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameActivity parentActivity = (GameActivity) getActivity();
+                Log.d("Password", "parent class: " + parentActivity.getClass().getName());
+                //emissione evento
+                //TODO: test
+                try {
+                    Socket socket = parentActivity.getSocket();
+                    parentActivity.getSocket().emit("answer", new JSONObject("{ higher: " + fragmentNumber + " }"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("Password", "event emitted");
+                try {
+                    parentActivity.nextEvent();
+                } catch (InterruptedException | JSONException e) {
+                    e.printStackTrace();
+                }
+                //Utilities.refreshPasswordFragment(parentActivity);
+            }
+        });
 
     }
 }

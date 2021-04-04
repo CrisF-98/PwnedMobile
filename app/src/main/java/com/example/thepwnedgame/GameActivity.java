@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thepwnedgame.socketevents.GuessEvent;
 import com.example.thepwnedgame.socketevents.SocketEvent;
+import com.example.thepwnedgame.socketevents.SocketGuessEvent;
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 import com.example.thepwnedgame.viewmodel.ScoreViewModel;
 
@@ -56,8 +58,6 @@ public class GameActivity extends AppCompatActivity {
         this.scoreViewModel = new ViewModelProvider(this).get(ScoreViewModel.class);
 
 
-
-
         this.eventQueue = new LinkedBlockingQueue<>();
         //connessione alla socket
         try {
@@ -74,7 +74,11 @@ public class GameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-        socket.on("on-error", sArgs -> Utilities.eventHandler("on-error", eventQueue, sArgs));
+        socket.on("on-error", sArgs -> {
+            Utilities.eventHandler("on-error", eventQueue, sArgs);
+            finish();
+            startActivity(getIntent());
+        });
         socket.on("game-end", sArgs -> Utilities.eventHandler("game-end", eventQueue, sArgs));
 
         //creazione observer sullo score
@@ -95,7 +99,6 @@ public class GameActivity extends AppCompatActivity {
         countdown = new CountDownTimer(10000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.d("countdown", "tick");
                 progressBar.setProgress((int) (millisUntilFinished/100));
             }
 
@@ -108,6 +111,33 @@ public class GameActivity extends AppCompatActivity {
         //start game
         socket.emit("start");
         countdown.start();
+        try {
+            this.nextEvent();
+        } catch (InterruptedException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 
+    public Socket getSocket(){
+        return this.socket;
+    }
+
+    public void nextEvent() throws InterruptedException, JSONException {
+        final SocketEvent event = this.eventQueue.take();
+        final String eventName = event.getName();
+        if (eventName.equals("on-error")){
+            //TODO: on-error
+        }
+        if (eventName.equals("game-end")){
+            //TODO: game-end
+        }
+        if (eventName.equals("guess")){
+            GuessEvent guessEvent = new SocketGuessEvent(event);
+            passOneViewModel.setFirstPassword(guessEvent.getFirstPassword());
+            passOneViewModel.setSecondPassword(guessEvent.getSecondPassword());
+            passOneViewModel.setValue(guessEvent.getFirstValue());
+            scoreViewModel.setScore(guessEvent.getScore());
+            //TODO: to be tested, should work
+        }
+    }
 }

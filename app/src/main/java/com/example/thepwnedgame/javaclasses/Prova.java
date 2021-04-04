@@ -71,6 +71,7 @@ public class Prova {
                 }
                 //invio la risposta.
                 socket.emit("answer", new JSONObject("{ higher: " + answer + " }"));
+
             }
         }
         //fine gioco
