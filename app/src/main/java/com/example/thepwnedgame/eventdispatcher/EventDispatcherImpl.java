@@ -1,8 +1,11 @@
 package com.example.thepwnedgame.eventdispatcher;
 
+import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thepwnedgame.GameActivity;
+import com.example.thepwnedgame.GameOverActivity;
 import com.example.thepwnedgame.socketevents.GuessEvent;
 import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.socketevents.SocketGuessEvent;
@@ -27,18 +30,18 @@ public class EventDispatcherImpl implements EventDispatcher{
         final SocketEvent event = this.queue.take();
         final String eventName = event.getName();
         GameActivity gameActivity = (GameActivity) activity;
-        if (eventName.equals("on-error")){
-            //TODO: on-error
-        }
-        if (eventName.equals("game-end")){
-            //TODO: game-end
+        if (eventName.equals("on-error") || eventName.equals("game-end")){
+            //TODO: on-error and game-end
+            Intent gameOverIntent = new Intent(gameActivity, GameOverActivity.class);
+            gameActivity.getSocket().disconnect();
+            gameActivity.startActivity(gameOverIntent);
         }
         if (eventName.equals("guess")){
             GuessEvent guessEvent = new SocketGuessEvent(event);
             passwordViewModel.setFirstPassword(guessEvent.getFirstPassword());
             passwordViewModel.setSecondPassword(guessEvent.getSecondPassword());
             passwordViewModel.setValue(guessEvent.getFirstValue());
-            scoreViewModel.setScore(guessEvent.getScore());
+            scoreViewModel.setScore(guessEvent.getScore(), gameActivity);
             gameActivity.getProgressBar().setProgress(100);
             gameActivity.getCountdown().cancel();
             gameActivity.getCountdown().start();

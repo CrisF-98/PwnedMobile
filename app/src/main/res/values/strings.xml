@@ -18,4 +18,9 @@
     <string name="score">Score</string>
     <string name="_0">0</string>
     <string name="time_remaining">Time Remaining</string>
+    <string name="over">OVER</string>
+    <string name="game">GAME</string>
+    <string name="you_scored">You scored</string>
+    <string name="points">points</string>
+    <string name="back_to_title_screen">Back to title screen</string>
 </resources>
