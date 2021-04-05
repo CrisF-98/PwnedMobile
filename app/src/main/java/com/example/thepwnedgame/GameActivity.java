@@ -1,5 +1,6 @@
 package com.example.thepwnedgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -93,7 +94,7 @@ public class GameActivity extends AppCompatActivity {
         //progress bar
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(100);
-        countdown = new CountDownTimer(10000, 100) {
+        /*countdown = new CountDownTimer(10000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setProgress((int) (millisUntilFinished/100));
@@ -101,10 +102,23 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Log.d("countdown", "countdown over");
+                Intent gameOverIntent = new Intent(, GameOverActivity.class);
+
+            }
+        };*/
+        //TODO: to test countdown
+        countdown = new BarCountdown(10000, 100, this) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                progressBar.setProgress((int) (millisUntilFinished/100));
+            }
+
+            @Override
+            public void onFinish() {
+                Intent gameOverIntent = new Intent(this.getActivity(), GameOverActivity.class);
+                startActivity(gameOverIntent);
             }
         };
-
         //start game
         socket.emit("start");
         countdown.start();

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ThePwnedGame</string>
+    <string name="the">THE</string>
+    <string name="pwned">PWNED</string>
+    <string name="game">GAME</string>
+    <string name="play">Gioca</string>
+    <string name="login">Login</string>
+    <string name="title_PUT">Consiglio sull\'uso delle password random</string>
+    <string name="open_settings">Apri Impostazioni</string>
+    <string name="open_tutorial">Apri Tutorial</string>
+    <string name="leaderboards">CLASSIFICHE</string>
+    <string name="statistics">STATISTICHE</string>
+    <string name="home">HOME</string>
+    <string name="password1">Password1</string>
+    <string name="first_password">Prima Password</string>
+    <string name="password_text">Testo Password</string>
+    <string name="password_strength">Forza Password</string>
+    <string name="score">Punteggio</string>
+    <string name="_0">0</string>
+    <string name="time_remaining">Tempo Rimanente</string>
+    <string name="over">OVER</string>
+    <string name="you_scored">Hai totalizzato</string>
+    <string name="points">punti</string>
+    <string name="back_to_title_screen">Torna al titolo</string>
+</resources>
