@@ -83,7 +83,7 @@ public class PasswordGameFragment extends Fragment {
                 }
                 Log.d("Password", "event emitted");
                 try {
-                    parentActivity.nextEvent();
+                    parentActivity.getEventDispatcher().nextEvent(parentActivity.getPassOneViewModel(), parentActivity.getScoreViewModel(), parentActivity);
                 } catch (InterruptedException | JSONException e) {
                     e.printStackTrace();
                 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.thepwnedgame.eventdispatcher.EventDispatcher;
 import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.socketevents.SocketEventImpl;
 import com.example.thepwnedgame.socketevents.SocketGuessEvent;
@@ -55,9 +56,9 @@ public class Utilities {
         return socket;
     }
 
-    public static void eventHandler(String name, BlockingQueue<SocketEvent> queue, Object... args){
+    public static void eventHandler(String name, EventDispatcher eventDispatcher, Object... args){
         try{
-            queue.put(new SocketEventImpl(name, (JSONObject) args[0]));
+            eventDispatcher.getQueue().put(new SocketEventImpl(name, (JSONObject) args[0]));
         } catch (InterruptedException | ClassCastException e){
             e.printStackTrace();
         }

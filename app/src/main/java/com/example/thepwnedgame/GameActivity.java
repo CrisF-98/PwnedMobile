@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.thepwnedgame.eventdispatcher.EventDispatcher;
+import com.example.thepwnedgame.eventdispatcher.EventDispatcherImpl;
 import com.example.thepwnedgame.socketevents.GuessEvent;
 import com.example.thepwnedgame.socketevents.SocketEvent;
 import com.example.thepwnedgame.socketevents.SocketGuessEvent;
@@ -35,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private ScoreViewModel scoreViewModel;
     private ProgressBar progressBar;
     private CountDownTimer countdown;
+    private EventDispatcher eventDispatcher = new EventDispatcherImpl();
 
 
     @Override
@@ -67,19 +70,13 @@ public class GameActivity extends AppCompatActivity {
         }
 
         //creazione degli handler
-        socket.on("guess", sArgs -> {
-            try {
-                Utilities.eventHandlerGuess("guess", eventQueue, this.passOneViewModel, this.scoreViewModel,  sArgs);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
+        socket.on("guess", sArgs -> Utilities.eventHandler("guess", this.eventDispatcher,  sArgs));
         socket.on("on-error", sArgs -> {
-            Utilities.eventHandler("on-error", eventQueue, sArgs);
+            Utilities.eventHandler("on-error", this.eventDispatcher, sArgs);
             finish();
             startActivity(getIntent());
         });
-        socket.on("game-end", sArgs -> Utilities.eventHandler("game-end", eventQueue, sArgs));
+        socket.on("game-end", sArgs -> Utilities.eventHandler("game-end", this.eventDispatcher, sArgs));
 
         //creazione observer sullo score
         TextView scoreTextView = findViewById(R.id.scoreNumber);
@@ -112,7 +109,7 @@ public class GameActivity extends AppCompatActivity {
         socket.emit("start");
         countdown.start();
         try {
-            this.nextEvent();
+            this.eventDispatcher.nextEvent(passOneViewModel, scoreViewModel, this);
         } catch (InterruptedException | JSONException e) {
             e.printStackTrace();
         }
@@ -122,7 +119,27 @@ public class GameActivity extends AppCompatActivity {
         return this.socket;
     }
 
-    public void nextEvent() throws InterruptedException, JSONException {
+    public EventDispatcher getEventDispatcher(){
+        return this.eventDispatcher;
+    }
+
+    public PasswordViewModel getPassOneViewModel() {
+        return passOneViewModel;
+    }
+
+    public ScoreViewModel getScoreViewModel() {
+        return scoreViewModel;
+    }
+
+    public ProgressBar getProgressBar(){
+        return this.progressBar;
+    }
+
+    public CountDownTimer getCountdown() {
+        return countdown;
+    }
+
+    /*public void nextEvent() throws InterruptedException, JSONException {
         final SocketEvent event = this.eventQueue.take();
         final String eventName = event.getName();
         if (eventName.equals("on-error")){
@@ -139,5 +156,5 @@ public class GameActivity extends AppCompatActivity {
             scoreViewModel.setScore(guessEvent.getScore());
             //TODO: to be tested, should work
         }
-    }
+    }*/
 }
