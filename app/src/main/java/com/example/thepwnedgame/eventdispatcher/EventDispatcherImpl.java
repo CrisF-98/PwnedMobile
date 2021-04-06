@@ -1,6 +1,8 @@
 package com.example.thepwnedgame.eventdispatcher;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,10 +33,13 @@ public class EventDispatcherImpl implements EventDispatcher{
         final String eventName = event.getName();
         GameActivity gameActivity = (GameActivity) activity;
         if (eventName.equals("on-error") || eventName.equals("game-end")){
-            //TODO: on-error and game-end
+            //TODO: to be tested
+            final Vibrator vibe = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
             Intent gameOverIntent = new Intent(gameActivity, GameOverActivity.class);
             gameActivity.getSocket().disconnect();
+            vibe.vibrate(200);
             gameActivity.startActivity(gameOverIntent);
+
         }
         if (eventName.equals("guess")){
             GuessEvent guessEvent = new SocketGuessEvent(event);
