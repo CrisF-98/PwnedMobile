@@ -34,6 +34,7 @@ public class Utilities {
     static void insertFragment(AppCompatActivity activity, Fragment fragment, String tag, int fragmentId){
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(fragmentId, fragment, tag);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
 

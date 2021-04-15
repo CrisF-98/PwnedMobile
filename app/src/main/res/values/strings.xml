@@ -22,4 +22,7 @@
     <string name="you_scored">You scored</string>
     <string name="points">points</string>
     <string name="back_to_title_screen">Back to title screen</string>
+    <string name="stats">STATS</string>
+    <string name="position">Position</string>
+    <string name="name">Name</string>
 </resources>
