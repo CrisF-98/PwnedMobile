@@ -133,16 +133,51 @@ public class StatisticFragment extends Fragment {
                     JSONObject meta = response.getJSONObject("meta");
                     JSONArray data = response.getJSONArray("data");
                     TextView gamesPlayed = view.findViewById(R.id.gamesPlayed);
+                    Integer games = Integer.parseInt(meta.getString("total"));
                     gamesPlayed.setText(meta.getString("total"));
-                    JSONObject firstScore = data.getJSONObject(0);
-                    JSONObject secondScore = data.getJSONObject(1);
-                    JSONObject thirdScore = data.getJSONObject(2);
-                    TextView first = view.findViewById(R.id.firstScore);
-                    first.setText(firstScore.getString("score"));
-                    TextView second = view.findViewById(R.id.secondScore);
-                    second.setText(secondScore.getString("score"));
-                    TextView third = view.findViewById(R.id.thirdScore);
-                    third.setText(thirdScore.getString("score"));
+                    switch (games) {
+                        case 0: {
+                            view.findViewById(R.id.firstPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.firstScore).setVisibility(GONE);
+                            view.findViewById(R.id.secondPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.secondScore).setVisibility(GONE);
+                            view.findViewById(R.id.thirdPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.thirdScore).setVisibility(GONE);
+                            break;
+                        }
+                        case 1:{
+                            JSONObject firstScore = data.getJSONObject(0);
+                            TextView first = view.findViewById(R.id.firstScore);
+                            first.setText(firstScore.getString("score"));
+                            view.findViewById(R.id.secondPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.secondScore).setVisibility(GONE);
+                            view.findViewById(R.id.thirdPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.thirdScore).setVisibility(GONE);
+                            break;
+                        }
+                        case 2:{
+                            JSONObject firstScore = data.getJSONObject(0);
+                            JSONObject secondScore = data.getJSONObject(1);
+                            TextView first = view.findViewById(R.id.firstScore);
+                            first.setText(firstScore.getString("score"));
+                            TextView second = view.findViewById(R.id.secondScore);
+                            second.setText(secondScore.getString("score"));
+                            view.findViewById(R.id.thirdPlaceholder).setVisibility(GONE);
+                            view.findViewById(R.id.thirdScore).setVisibility(GONE);
+                            break;
+                        }
+                        default:{
+                            JSONObject firstScore = data.getJSONObject(0);
+                            JSONObject secondScore = data.getJSONObject(1);
+                            JSONObject thirdScore = data.getJSONObject(2);
+                            TextView first = view.findViewById(R.id.firstScore);
+                            first.setText(firstScore.getString("score"));
+                            TextView second = view.findViewById(R.id.secondScore);
+                            second.setText(secondScore.getString("score"));
+                            TextView third = view.findViewById(R.id.thirdScore);
+                            third.setText(thirdScore.getString("score"));
+                        }
+                    }
                     //loadstats(view);
                 } catch (JSONException e) {
                     e.printStackTrace();
