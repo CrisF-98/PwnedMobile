@@ -23,4 +23,23 @@
     <string name="you_scored">Hai totalizzato</string>
     <string name="points">punti</string>
     <string name="back_to_title_screen">Torna al titolo</string>
+    <string name="stats">STATISTICHE</string>
+    <string name="position">Posizione</string>
+    <string name="name">Nome</string>
+    <string name="register">REGISTRATI</string>
+    <string name="hello">"Ciao "</string>
+    <string name="your_points_average">La tua media punti:</string>
+    <string name="your_average_guesses">La tua media di risposte giuste:</string>
+    <string name="highest_score">Punteggio più alto:</string>
+    <string name="games_played">Partite giocate:</string>
+    <string name="_1th">1°:</string>
+    <string name="_2nd">2°:</string>
+    <string name="_3rd">3°:</string>
+    <string name="top_3_scores">TOP 3 PUNTEGGI</string>
+    <string name="disclaimer">Attenzione: questo video è stato ideato per la versione web del gioco.</string>
+    <string name="tutorial_first">A ogni round ti verrà presentata una coppia di password. Sai quanto è popolare la prima.</string>
+    <string name="tutorial_second">Devi indovinare quale sia la più popolare.</string>
+    <string name="tutorial_third">Attenzione al tempo! Quando finisce, è game over. Il gioco termina anche quando dai una risposta sbagliata.</string>
+    <string name="tutorial_fourth">Puoi giocare anonimamente o loggandoti al tuo account. Nel secondo caso, puoi anche vedere le tue statistiche. Ogni partita viene registrata in una classifica.</string>
+    <string name="have_fun">Divertiti!</string>
 </resources>

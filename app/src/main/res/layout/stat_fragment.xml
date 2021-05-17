@@ -2,14 +2,218 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/stats"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/press_start_2p"
+        android:textSize="20sp"
+        android:id="@+id/statisticsTitleTextView"
+        android:layout_margin="5dp"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello"
+        android:textSize="16sp"
+        android:id="@+id/helloTextView"
+        app:layout_constraintTop_toBottomOf="@id/statisticsTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameStatsTextView"
+        android:text="@string/username"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/helloTextView"
+        app:layout_constraintTop_toBottomOf="@id/statisticsTitleTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourAverageTextView"
+        android:text="@string/your_points_average"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        app:layout_constraintTop_toBottomOf="@id/helloTextView"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/averagePoints"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/yourAverageTextView"
+        app:layout_constraintTop_toTopOf="@id/yourAverageTextView"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/averageGuessesTextView"
+        android:text="@string/your_average_guesses"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        app:layout_constraintTop_toBottomOf="@id/yourAverageTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/averageGuesses"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/averageGuessesTextView"
+        app:layout_constraintTop_toTopOf="@id/averageGuessesTextView"
+        android:layout_marginStart="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000"
+        android:id="@+id/averageMaxDivider"
+        app:layout_constraintTop_toBottomOf="@id/averageGuessesTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/maxScoreTextView"
+        android:text="@string/highest_score"
+        app:layout_constraintTop_toBottomOf="@id/averageMaxDivider"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/highestScore"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/maxScoreTextView"
+        app:layout_constraintTop_toTopOf="@id/maxScoreTextView"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/highestComment"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        app:layout_constraintTop_toBottomOf="@id/highestScore"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000"
+        android:id="@+id/maxTop3Divider"
+        app:layout_constraintTop_toBottomOf="@id/highestComment"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gamesPlayedtextView"
+        android:text="@string/games_played"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/maxTop3Divider"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gamesPlayed"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/gamesPlayedtextView"
+        app:layout_constraintTop_toTopOf="@id/gamesPlayedtextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:id="@+id/top3TextView"
+        android:text="@string/top_3_scores"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/gamesPlayedtextView"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstPlaceholder"
+        android:text="@string/_1th"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/top3TextView"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        android:layout_marginStart="10dp"
+        android:textColor="#d4af37"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstScore"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/firstPlaceholder"
+        app:layout_constraintTop_toTopOf="@id/firstPlaceholder"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondPlaceholder"
+        android:text="@string/_2nd"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/firstPlaceholder"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        android:layout_marginStart="10dp"
+        android:textColor="#aaa9ad"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondScore"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/secondPlaceholder"
+        app:layout_constraintTop_toTopOf="@id/secondPlaceholder"
+        android:layout_marginStart="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/thirdPlaceholder"
+        android:text="@string/_3rd"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/secondPlaceholder"
+        app:layout_constraintStart_toStartOf="@id/helloTextView"
+        android:layout_marginStart="10dp"
+        android:textColor="#cd7f32"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/thirdScore"
+        android:text="@string/placeholder"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/thirdPlaceholder"
+        app:layout_constraintTop_toTopOf="@id/thirdPlaceholder"
+        android:layout_marginStart="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

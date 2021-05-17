@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/usernameTextView"
+            android:text="@string/username"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/usernameEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameEditText"
+            android:hint="@string/username"
+            android:text=""
+            app:layout_constraintTop_toTopOf="@id/usernameTextView"
+            app:layout_constraintStart_toEndOf="@id/usernameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ems="10"
+            android:inputType="text"
+            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="5dp"/>
+
+        <!-- password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/passwordTextView"
+            android:text="@string/passwordTV"
+            app:layout_constraintTop_toBottomOf="@id/usernameTextView"
+            app:layout_constraintBottom_toBottomOf="@id/passwordEditText"
+            app:layout_constraintStart_toStartOf="@id/usernameTextView"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:gravity="center"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/passwordEditText"
+            android:hint="@string/passwordTV"
+            android:text=""
+            app:layout_constraintTop_toTopOf="@id/passwordTextView"
+            app:layout_constraintStart_toEndOf="@id/usernameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ems="10"
+            android:inputType="textVisiblePassword"
+            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="5dp" />
+
+        <!-- e-mail -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/emailTextView"
+            android:text="@string/e_mail"
+            app:layout_constraintTop_toBottomOf="@id/passwordTextView"
+            app:layout_constraintBottom_toBottomOf="@id/emailEditText"
+            app:layout_constraintStart_toStartOf="@id/usernameTextView"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:gravity="center" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailEditText"
+            android:hint="@string/username"
+            android:text=""
+            app:layout_constraintTop_toTopOf="@id/emailTextView"
+            app:layout_constraintStart_toEndOf="@id/usernameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="5dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerActivityButton"
+            android:text="@string/register"
+            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/emailTextView"
+            app:layout_constraintStart_toStartOf="@id/emailTextView"
+            android:layout_marginTop="10dp"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

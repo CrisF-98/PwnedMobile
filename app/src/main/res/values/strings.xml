@@ -25,4 +25,28 @@
     <string name="stats">STATS</string>
     <string name="position">Position</string>
     <string name="name">Name</string>
+    <string name="register">REGISTER</string>
+    <string name="username" translatable="false">Username:</string>
+    <string name="passwordTV" translatable="false">Password:</string>
+    <string name="e_mail" translatable="false">E-mail:</string>
+    <string name="api" translatable="false">https://pwnedgame.azurewebsites.net/api</string>
+    <string name="auth0_client_id" translatable="false">...</string>
+    <string name="auth0_domain" translatable="false">...</string>
+    <string name="logout" translatable="false">LOGOUT</string>
+    <string name="hello">Hello </string>
+    <string name="your_points_average">Your Points Average:</string>
+    <string name="placeholder" translatable="false">...</string>
+    <string name="your_average_guesses">Your Average Guesses:</string>
+    <string name="highest_score">Highest Score:</string>
+    <string name="games_played">Games played:</string>
+    <string name="_1th">1th:</string>
+    <string name="_2nd">2nd:</string>
+    <string name="top_3_scores">TOP 3 SCORES</string>
+    <string name="_3rd">3rd:</string>
+    <string name="disclaimer">Disclaimer: this video was made for web version of the game.</string>
+    <string name="tutorial_first">Each round you will be presented with a pair of passwords. You know how much popular is the first one.</string>
+    <string name="tutorial_second">You have to guess which one is the most popular.</string>
+    <string name="tutorial_third">Beware of time left! When it ends, it\'s a game over. Game also ends when you give an incorrect answer.</string>
+    <string name="tutorial_fourth">You can play anonymously or by logging in to your account. In the second case, you can also see your stats. Every game is recorded inside a leaderboard.</string>
+    <string name="have_fun">Have fun!</string>
 </resources>

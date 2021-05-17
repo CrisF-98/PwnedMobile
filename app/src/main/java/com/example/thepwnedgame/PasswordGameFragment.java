@@ -72,16 +72,15 @@ public class PasswordGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GameActivity parentActivity = (GameActivity) getActivity();
-                Log.d("Password", "parent class: " + parentActivity.getClass().getName());
+                //Log.d("Password", "parent class: " + parentActivity.getClass().getName());
                 //emissione evento
-                //TODO: test
                 try {
                     Socket socket = parentActivity.getSocket();
                     parentActivity.getSocket().emit("answer", new JSONObject("{ higher: " + fragmentNumber + " }"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("Password", "event emitted");
+                //Log.d("Password", "event emitted");
                 try {
                     parentActivity.getEventDispatcher().nextEvent(parentActivity.getPassOneViewModel(), parentActivity.getScoreViewModel(), parentActivity);
                 } catch (InterruptedException | JSONException e) {

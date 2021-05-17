@@ -21,4 +21,18 @@
         <item name="maxHeight">32dip</item>
         <item name="colorControlActivated">@color/black</item>
     </style>
+
+    <style name="ThemeOverlay.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <!-- Text color -->
+        <item name="android:editTextColor">@color/white</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">@color/white</item>
+        <!-- Bar Title -->
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="popup_animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in_animation</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_animation</item>
+    </style>
 </resources>

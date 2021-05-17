@@ -12,16 +12,7 @@
         app:srcCompat="@drawable/ic_outline_info_24"
         android:layout_gravity="top|end"
         android:backgroundTint="@color/white"
-        android:contentDescription="@string/open_tutorial" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fab_settings"
-        app:srcCompat="@drawable/ic_baseline_settings_24"
-        android:layout_gravity="top|end"
-        android:layout_marginEnd="80dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="@string/open_settings" />
+        android:contentDescription="@string/open_tutorial"
+        app:fabSize="mini"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

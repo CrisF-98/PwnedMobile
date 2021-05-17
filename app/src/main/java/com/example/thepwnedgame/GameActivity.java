@@ -1,12 +1,12 @@
 package com.example.thepwnedgame;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.thepwnedgame.eventdispatcher.EventDispatcher;
 import com.example.thepwnedgame.eventdispatcher.EventDispatcherImpl;
-import com.example.thepwnedgame.socketevents.GuessEvent;
+import com.example.thepwnedgame.singletons.PUTSingleton;
 import com.example.thepwnedgame.socketevents.SocketEvent;
-import com.example.thepwnedgame.socketevents.SocketGuessEvent;
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 import com.example.thepwnedgame.viewmodel.ScoreViewModel;
 
@@ -27,6 +26,7 @@ import java.net.URISyntaxException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import io.socket.client.Manager;
 import io.socket.client.Socket;
 
 
@@ -44,12 +44,16 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final SharedPreferences sharedPreferences = getSharedPreferences("UserData", 0);
+        /*Log.d("preferences", sharedPreferences.getString("username", ""));
+        Log.d("preferences", sharedPreferences.getString("id", ""));*/
+        Log.d("preferences", sharedPreferences.getString("JWT", ""));
+        /*Log.d("preferences", sharedPreferences.getString("refresh", ""));*/
         setContentView(R.layout.game_layout);
         if (savedInstanceState == null){
             Utilities.insertFragment(this, new PasswordGameFragment(), "First Password Fragment", R.id.firstPasswordFragment);
@@ -60,53 +64,77 @@ public class GameActivity extends AppCompatActivity {
         //creazione dei viewmodel
         this.passOneViewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
         this.scoreViewModel = new ViewModelProvider(this).get(ScoreViewModel.class);
-
+        TextView put = findViewById(R.id.game_PUT);
+        put.setText(PUTSingleton.getInstance().getAPUT());
 
         this.eventQueue = new LinkedBlockingQueue<>();
         //connessione alla socket
         try {
-            this.socket = Utilities.createSocket();
+            this.socket = Utilities.createSocket(getApplication());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
         //creazione degli handler
-        socket.on("guess", sArgs -> Utilities.eventHandler("guess", this.eventDispatcher,  sArgs));
-        socket.on("on-error", sArgs -> {
-            Utilities.eventHandler("on-error", this.eventDispatcher, sArgs);
-            finish();
-            startActivity(getIntent());
+        socket.on("guess", sArgs -> {
+            try {
+                Utilities.eventHandler(getApplication(), this,"guess", this.eventDispatcher,  sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         });
-        socket.on("game-end", sArgs -> Utilities.eventHandler("game-end", this.eventDispatcher, sArgs));
+        socket.on("on-error", sArgs -> {
+            try {
+                Utilities.eventHandler(getApplication(), this,  "on-error", this.eventDispatcher, sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            /*finish();
+            startActivity(getIntent());*/
+        });
+        socket.on("game-end", sArgs -> {
+            try {
+                Utilities.eventHandler(getApplication(), this, "game-end", this.eventDispatcher, sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+        socket.on(Socket.EVENT_CONNECT_ERROR, sArgs-> {
+            try {
+                Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+        socket.on(Manager.EVENT_ERROR, sArgs -> {
+            try {
+                Utilities.eventHandler(getApplication(), this,  Manager.EVENT_ERROR, this.eventDispatcher, sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("GameActivity", "ERROR DETECTED");
+        });
+        socket.on("error", sArgs-> {
+            try {
+                Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
 
         //creazione observer sullo score
         TextView scoreTextView = findViewById(R.id.scoreNumber);
         this.scoreViewModel.getScore().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                Integer score = Integer.parseInt(scoreTextView.getText().toString());
-                Integer newScore = score + integer;
-                scoreTextView.setText(Integer.toString(newScore));
+                //Integer score = Integer.parseInt(scoreTextView.getText().toString());
+                scoreTextView.setText(Integer.toString(integer));
             }
         });
-        //connessione della socket
         socket.connect();
         //progress bar
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(100);
-        /*countdown = new CountDownTimer(10000, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                progressBar.setProgress((int) (millisUntilFinished/100));
-            }
-
-            @Override
-            public void onFinish() {
-                Intent gameOverIntent = new Intent(, GameOverActivity.class);
-
-            }
-        };*/
-        //TODO: to test countdown
         countdown = new BarCountdown(10000, 100, this) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -120,6 +148,16 @@ public class GameActivity extends AppCompatActivity {
             }
         };
         //start game
+        //logged version - check if there's an on-error
+        if(this.eventDispatcher.getQueue().size()!=0){
+            try {
+                this.eventDispatcher.nextEvent(passOneViewModel, scoreViewModel, this);
+            } catch (InterruptedException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d("userdata", getSharedPreferences("UserData", 0).getString("username", ""));
+
         socket.emit("start");
         countdown.start();
         try {
@@ -153,22 +191,15 @@ public class GameActivity extends AppCompatActivity {
         return countdown;
     }
 
-    /*public void nextEvent() throws InterruptedException, JSONException {
-        final SocketEvent event = this.eventQueue.take();
-        final String eventName = event.getName();
-        if (eventName.equals("on-error")){
-            //TODO: on-error
-        }
-        if (eventName.equals("game-end")){
-            //TODO: game-end
-        }
-        if (eventName.equals("guess")){
-            GuessEvent guessEvent = new SocketGuessEvent(event);
-            passOneViewModel.setFirstPassword(guessEvent.getFirstPassword());
-            passOneViewModel.setSecondPassword(guessEvent.getSecondPassword());
-            passOneViewModel.setValue(guessEvent.getFirstValue());
-            scoreViewModel.setScore(guessEvent.getScore());
-            //TODO: to be tested, should work
-        }
+    /*public void logout() {
+        //pulisco gli eventi
+        this.eventQueue.clear();
+        //this.recreate();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recreate();
+            }
+        });
     }*/
 }
