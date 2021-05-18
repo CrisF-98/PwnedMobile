@@ -1,38 +1,25 @@
 package com.example.thepwnedgame;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeFragment extends Fragment {
+
+    int tutorialPage = 1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,10 +37,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 if (inflater != null) {
-                    View popupView = inflater.inflate(R.layout.tutorial_layout, null);
-                    /*VideoView tutorial = popupView.findViewById(R.id.tutorialVideoView);
-                    String videoPath = "android.resource.//" + getActivity().getPackageName() + "/" + R.raw.tutorial;
-                    Uri uri = Uri.parse(videoPath);*/
+                    View popupView = inflater.inflate(R.layout.tutorial_layout_one, null);
+                /*VideoView tutorial = popupView.findViewById(R.id.tutorialVideoView);
+                String videoPath = "android.resource.//" + getActivity().getPackageName() + "/" + R.raw.tutorial;
+                Uri uri = Uri.parse(videoPath);*/
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     boolean focusable = true;
@@ -64,7 +51,7 @@ public class HomeFragment extends Fragment {
                     MediaController controller = new MediaController(getContext());
                     tutorial.setMediaController(controller);
                     controller.setAnchorView(tutorial);*/
-                    //dismiss when touched
+                        //dismiss when touched
                     /*popupView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
@@ -72,6 +59,25 @@ public class HomeFragment extends Fragment {
                             return true;
                         }
                     });*/
+                    popupView.findViewById(R.id.nextTutorial).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                            View popupViewTwo = inflater.inflate(R.layout.tutorial_layout_two, null);
+                            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                            boolean focusable = true;
+                            final PopupWindow popupWindowTwo = new PopupWindow(popupViewTwo, width, height, focusable);
+                            popupWindowTwo.setAnimationStyle(R.style.popup_animation);
+                            popupWindowTwo.showAtLocation(view, Gravity.CENTER, 0, 0);
+                            popupViewTwo.findViewById(R.id.tutorial_button).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    popupWindowTwo.dismiss();
+                                }
+                            });
+                        }
+                    });
                     popupView.findViewById(R.id.tutorial_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
