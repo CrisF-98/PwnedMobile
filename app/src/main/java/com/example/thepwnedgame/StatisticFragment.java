@@ -93,7 +93,7 @@ public class StatisticFragment extends Fragment {
                 loadtop1000();
                 loadscores(view);
             } else {
-                if(Locale.getDefault().getDisplayLanguage().equals("it")) {
+                if(Locale.getDefault().getDisplayLanguage().contains("it")) {
                     String text = "Devi essere loggato per visualizzare le statistiche.";
                     ((TextView) view.findViewById(R.id.helloTextView)).setText(text);
                 } else {
@@ -264,7 +264,7 @@ public class StatisticFragment extends Fragment {
                         if(user.equals(fullScores.get(i).getUsername().toLowerCase()) && Integer.parseInt(max) == fullScores.get(i).getScore()){
                             found = true;
                             String languageCode = Locale.getDefault().getLanguage();
-                            if (languageCode.equals("it")){
+                            if (languageCode.contains("it")){
                                 String toDisplay = "Posizione " + fullScores.get(i).getPosition() + " in top 1000! Prova a migliorarti!";
                                 ((TextView)view.findViewById(R.id.highestComment)).setText(toDisplay);
                             } else {
@@ -275,7 +275,7 @@ public class StatisticFragment extends Fragment {
                         }
                     }
                     if (!found){
-                        if (Locale.getDefault().getDisplayLanguage().equals("it")){
+                        if (Locale.getDefault().getDisplayLanguage().contains("it")){
                             String toDisplay = "Non sei ancora in top 1000, prova a entrarci!";
                             ((TextView)view.findViewById(R.id.highestComment)).setText(toDisplay);
                         } else {

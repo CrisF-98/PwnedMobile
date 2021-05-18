@@ -23,6 +23,7 @@ public class GameOverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent backToHomeIntent = new Intent(v.getContext(), MainActivity.class);
                 startActivity(backToHomeIntent);
+                finish();
             }
         });
     }

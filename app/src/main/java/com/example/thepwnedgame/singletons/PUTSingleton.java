@@ -50,7 +50,7 @@ public class PUTSingleton {
     }
 
     public String getAPUT(){
-        if (Locale.getDefault().getDisplayLanguage().equals("it")){
+        if (Locale.getDefault().getDisplayLanguage().contains("it")){
             int pick = new Random().nextInt(ItaPuts.values().length);
             return ItaPuts.values()[pick].toString();
         } else {

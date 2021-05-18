@@ -50,6 +50,7 @@ public class EventDispatcherImpl implements EventDispatcher{
             gameActivity.getSocket().disconnect();
             vibe.vibrate(50);
             gameActivity.startActivity(gameOverIntent);
+            gameActivity.finish();
 
         }
         if (eventName.equals("on-error")){
@@ -62,6 +63,7 @@ public class EventDispatcherImpl implements EventDispatcher{
             gameActivity.getSocket().disconnect();
             vibe.vibrate(50);
             gameActivity.startActivity(gameOverIntent);
+            gameActivity.finish();
         }
         if (eventName.equals("guess")){
             final MediaPlayer correctAnswer = MediaPlayer.create(activity, R.raw.correct_answer);
