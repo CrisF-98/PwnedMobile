@@ -50,7 +50,7 @@ public class StatisticFragment extends Fragment {
     private ConnectivityManager.NetworkCallback networkCallback;
     private RequestQueue requestQueue;
     private List<ScoreItem> fullScores = new ArrayList<>();
-    private static final int MAX_SIZE = 500;
+    private static final int MAX_SIZE = 1000;
     private static final String PERIOD = "forever";
     private String userId;
     private String jwt;

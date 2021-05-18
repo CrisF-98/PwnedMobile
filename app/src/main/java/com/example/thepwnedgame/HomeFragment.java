@@ -65,11 +65,17 @@ public class HomeFragment extends Fragment {
                     tutorial.setMediaController(controller);
                     controller.setAnchorView(tutorial);*/
                     //dismiss when touched
-                    popupView.setOnTouchListener(new View.OnTouchListener() {
+                    /*popupView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
                             popupWindow.dismiss();
                             return true;
+                        }
+                    });*/
+                    popupView.findViewById(R.id.tutorial_button).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
                         }
                     });
                 }

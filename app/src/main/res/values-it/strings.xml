@@ -42,4 +42,5 @@
     <string name="tutorial_third">Attenzione al tempo! Quando finisce, è game over. Il gioco termina anche quando dai una risposta sbagliata.</string>
     <string name="tutorial_fourth">Puoi giocare anonimamente o loggandoti al tuo account. Nel secondo caso, puoi anche vedere le tue statistiche. Ogni partita viene registrata in una classifica.</string>
     <string name="have_fun">Divertiti!</string>
+    <string name="got_it">OK</string>
 </resources>

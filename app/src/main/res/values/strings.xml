@@ -49,4 +49,5 @@
     <string name="tutorial_third">Beware of time left! When it ends, it\'s a game over. Game also ends when you give an incorrect answer.</string>
     <string name="tutorial_fourth">You can play anonymously or by logging in to your account. In the second case, you can also see your stats. Every game is recorded inside a leaderboard.</string>
     <string name="have_fun">Have fun!</string>
+    <string name="got_it">GOT IT</string>
 </resources>

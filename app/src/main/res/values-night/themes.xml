@@ -1,16 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ThePwnedGame" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ThePwnedGame" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#1e88e5</item>
+        <item name="colorPrimaryVariant">#6ab7ff</item>
+        <item name="colorSurface">#005cb2</item>
+        <item name="colorOnSurface">@color/white</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">#f44336</item>
+        <item name="colorSecondaryVariant">#ba000d</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="minHeight">32dip</item>
+        <item name="maxHeight">32dip</item>
+        <item name="colorControlActivated">@color/black</item>
+    </style>
+
+    <style name="ThemeOverlay.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <!-- Text color -->
+        <item name="android:editTextColor">@color/white</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">@color/white</item>
+        <!-- Bar Title -->
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="popup_animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in_animation</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_animation</item>
     </style>
 </resources>
