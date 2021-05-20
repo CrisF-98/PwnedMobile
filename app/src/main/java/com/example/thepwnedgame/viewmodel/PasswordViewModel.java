@@ -13,6 +13,7 @@ public class PasswordViewModel extends AndroidViewModel {
     private final MutableLiveData<String> firstPassword = new MutableLiveData<>();
     private final MutableLiveData<String> secondPassword = new MutableLiveData<>();
     private final MutableLiveData<Integer> value = new MutableLiveData<>();
+    private final MutableLiveData<String> value2 = new MutableLiveData<>();
 
     public void setFirstPassword(String password){
         this.firstPassword.postValue(password);
@@ -22,6 +23,10 @@ public class PasswordViewModel extends AndroidViewModel {
 
     public void setValue(Integer value){
         this.value.postValue(value);
+    }
+
+    public void setValue2(String value) {
+        this.value2.setValue(value);
     }
 
     public LiveData<String> getFirstPassword(){
@@ -34,6 +39,10 @@ public class PasswordViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getValue(){
         return this.value;
+    }
+
+    public LiveData<String> getValue2() {
+        return this.value2;
     }
 
     public PasswordViewModel(@NonNull Application application) {

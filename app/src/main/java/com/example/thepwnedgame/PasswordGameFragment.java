@@ -2,6 +2,7 @@ package com.example.thepwnedgame;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 import io.socket.client.Socket;
 import okhttp3.internal.Util;
@@ -66,6 +69,20 @@ public class PasswordGameFragment extends Fragment {
                 }
             });
             passwordStrength.setText("***");
+            passwordViewModel.getValue2().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    passwordStrength.setText(s);
+                    String message;
+                    TextView remaining = getActivity().findViewById(R.id.timeTextView);
+                    if (Locale.getDefault().getDisplayLanguage().contains("it")){
+                        message = "Risposta sbagliata";
+                    } else {
+                        message = "Wrong answer";
+                    }
+                    remaining.setText(message);
+                }
+            });
         }
 
         view.setOnClickListener(new View.OnClickListener() {

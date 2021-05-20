@@ -3,6 +3,7 @@ package com.example.thepwnedgame.eventdispatcher;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ import com.example.thepwnedgame.socketevents.GuessEvent;
 import com.example.thepwnedgame.socketevents.OnErrorEvent;
 import com.example.thepwnedgame.socketevents.OnErrorEventImpl;
 import com.example.thepwnedgame.socketevents.SocketEvent;
+import com.example.thepwnedgame.socketevents.SocketGameErrorEvent;
 import com.example.thepwnedgame.socketevents.SocketGuessEvent;
 import com.example.thepwnedgame.viewmodel.PasswordViewModel;
 import com.example.thepwnedgame.viewmodel.ScoreViewModel;
@@ -44,14 +46,20 @@ public class EventDispatcherImpl implements EventDispatcher{
         GameActivity gameActivity = (GameActivity) activity;
         if (eventName.equals("game-end")){
             //TODO: l'on-error scatta con un jwt scaduto. Lanciare il refresh del token JWT
-            final Vibrator vibe = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-            Intent gameOverIntent = new Intent(gameActivity, GameOverActivity.class);
+            //mostra punteggio della seconda password
+            final SocketGameErrorEvent gameErrorEvent = new SocketGameErrorEvent(event);
             gameActivity.getCountdown().cancel();
+            Handler handler = new Handler();
+            passwordViewModel.setValue2(String.valueOf(gameErrorEvent.getSecondPasswordScore()));
+            final Vibrator vibe = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+            vibe.vibrate(50);gameActivity.getCountdown().cancel();
             gameActivity.getSocket().disconnect();
-            vibe.vibrate(50);
-            gameActivity.startActivity(gameOverIntent);
-            gameActivity.finish();
-
+            handler.postDelayed(() -> {
+                    Intent gameOverIntent = new Intent(gameActivity, GameOverActivity.class);
+                    gameActivity.startActivity(gameOverIntent);
+                    gameActivity.finish();
+                }, 1000);
+            //aspetta un secondo
         }
         if (eventName.equals("on-error")){
             OnErrorEvent onErrorEvent = new OnErrorEventImpl(event);
