@@ -127,16 +127,10 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("login error", String.valueOf(error.networkResponse.statusCode));
                 Toast.makeText(getApplicationContext(), "Login failure, retry", Toast.LENGTH_SHORT).show();
             }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("content-type", "application/json");
-                return headers;
-            }
-        };
+        });
         request.setTag(TAG);
         requestQueue.add(request);
     }

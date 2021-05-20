@@ -102,8 +102,13 @@ public class GameActivity extends AppCompatActivity {
         socket.on(Socket.EVENT_CONNECT_ERROR, sArgs-> {
             try {
                 Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | ClassCastException e) {
                 e.printStackTrace();
+                /*Intent gameOverIntent = new Intent(getApplicationContext(), GameOverActivity.class);
+                startActivity(gameOverIntent);
+                Log.d("game activity", "class cast detected in game activity, bye.");
+                socket.disconnect();
+                finish();*/
             }
         });
         socket.on(Manager.EVENT_ERROR, sArgs -> {

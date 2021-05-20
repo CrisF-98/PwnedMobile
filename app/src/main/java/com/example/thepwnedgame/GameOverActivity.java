@@ -22,8 +22,8 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backToHomeIntent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(backToHomeIntent);
                 finish();
+                startActivity(backToHomeIntent);
             }
         });
     }

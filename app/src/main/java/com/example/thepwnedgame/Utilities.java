@@ -2,11 +2,13 @@ package com.example.thepwnedgame;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,6 +31,7 @@ import java.util.Map;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.engineio.client.EngineIOException;
 
 public class Utilities {
 
@@ -78,21 +81,20 @@ public class Utilities {
         return socket;
     }
 
-    public static void eventHandler(Application application, GameActivity activity, String name, EventDispatcher eventDispatcher, Object... args) throws JSONException {
-        if(args[0].getClass().getName().equals("io.socket.engineio.client.EngineIOException")){
-            //refresh token
-            //restart activity
-        }
+    public static void eventHandler(Application application, GameActivity activity, String name, EventDispatcher eventDispatcher, Object... args)throws JSONException{
         try{
-            if(name.equals(Socket.EVENT_CONNECT_ERROR)){
-                eventDispatcher.getQueue().put(new ConnectErrorSocketEvent(application, name, (JSONObject) args[0]));
+            if (name.equals(Socket.EVENT_CONNECT_ERROR)){
+                Log.d("utilities", "line 87");
+                activity.getSocket().disconnect();
+                /*Intent gameOverIntent = new Intent(activity, GameOverActivity.class);
+                activity.startActivity(gameOverIntent);*/
+                activity.runOnUiThread(() -> Toast.makeText(activity.getApplicationContext(), "FATAL ERROR, CLOSING", Toast.LENGTH_SHORT).show());
+                activity.finish();
             } else {
                 eventDispatcher.getQueue().put(new SocketEventImpl(name, (JSONObject) args[0]));
             }
         } catch (InterruptedException | ClassCastException e) {
             e.printStackTrace();
-            //se è una class cast ho un jwt rotto.
-            //quindi, refresh token e restart activity
         }
     }
 

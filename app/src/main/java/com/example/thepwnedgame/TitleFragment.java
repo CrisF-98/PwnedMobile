@@ -200,6 +200,7 @@ public class TitleFragment extends Fragment {
     private void startGame() {
         Intent startGameIntent = new Intent(getActivity(), GameActivity.class);
         startActivity(startGameIntent);
+        getActivity().finish();
     }
 
     @Override

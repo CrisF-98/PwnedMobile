@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -251,9 +252,12 @@ public class StatisticFragment extends Fragment {
                     JSONArray history = data.getJSONArray("history");
                     JSONObject firstHistory = history.getJSONObject(0);
                     TextView pointsAverage = view.findViewById(R.id.averagePoints);
-                    pointsAverage.setText(firstHistory.getString("avgScore"));
+                    DecimalFormat format = new DecimalFormat("#.###");
+                    Double avgPoints = Double.parseDouble(firstHistory.getString("avgScore"));
+                    pointsAverage.setText(format.format(avgPoints));
                     TextView averageGuesses = view.findViewById(R.id.averageGuesses);
-                    averageGuesses.setText(firstHistory.getString("avgGuesses"));
+                    Double avgGuesses = Double.parseDouble(firstHistory.getString("avgGuesses"));
+                    averageGuesses.setText(String.valueOf(format.format(avgGuesses)));
                     TextView maxScore = view.findViewById(R.id.highestScore);
                     String max = firstHistory.getString("maxScore");
                     maxScore.setText(max);
