@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,8 +102,10 @@ public class GameActivity extends AppCompatActivity {
         });
         socket.on(Socket.EVENT_CONNECT_ERROR, sArgs-> {
             try {
+                runOnUiThread(() -> Toast.makeText(getApplication(), "FATAL ERROR - CRASHING", Toast.LENGTH_SHORT));
+                Thread.sleep(100);
                 Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
-            } catch (JSONException | ClassCastException e) {
+            } catch (ClassCastException | JSONException | InterruptedException e) {
                 e.printStackTrace();
                 /*Intent gameOverIntent = new Intent(getApplicationContext(), GameOverActivity.class);
                 startActivity(gameOverIntent);
@@ -144,6 +147,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setProgress((int) (millisUntilFinished/100));
+
             }
 
             @Override

@@ -85,10 +85,12 @@ public class Utilities {
         try{
             if (name.equals(Socket.EVENT_CONNECT_ERROR)){
                 Log.d("utilities", "line 87");
-                activity.getSocket().disconnect();
-                /*Intent gameOverIntent = new Intent(activity, GameOverActivity.class);
+                activity.runOnUiThread(() -> Toast.makeText(activity.getApplication(), "FATAL ERROR - CRASHING", Toast.LENGTH_SHORT).show());
+                /*Intent gameOverIntent = new Intent(activity, LoginActivity.class);
                 activity.startActivity(gameOverIntent);*/
-                activity.runOnUiThread(() -> Toast.makeText(activity.getApplicationContext(), "FATAL ERROR, CLOSING", Toast.LENGTH_SHORT).show());
+                activity.getSocket().disconnect();
+
+                Thread.sleep(Toast.LENGTH_SHORT);
                 activity.finish();
             } else {
                 eventDispatcher.getQueue().put(new SocketEventImpl(name, (JSONObject) args[0]));

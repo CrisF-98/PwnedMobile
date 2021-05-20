@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -42,8 +45,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class LeaderBoardsFragment extends Fragment {
+public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private RecyclerView recyclerView;
     private LeaderboardAdapter adapter;
@@ -55,10 +59,13 @@ public class LeaderBoardsFragment extends Fragment {
     private int page;
     private Snackbar snackbar;
     private LeaderboardViewModel leaderboardViewModel;
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 15;
     private List<ScoreItem> fullList = new ArrayList<>();
     private static final int MAX_SIZE = 1000;
-    private static final String PERIOD = "forever";
+    private String period = "forever";
+
+    private final String[] engPeriods = {"forever", "day", "week", "month", "year"};
+    private final String[] itaPeriods = {"sempre", "oggi", "settimana", "mese", "anno"};
 
     @Nullable
     @Override
@@ -143,15 +150,30 @@ public class LeaderBoardsFragment extends Fragment {
                     }
                 }
             });
+
+            Spinner periodSpinner = (Spinner) view.findViewById(R.id.period_spinner);
+            periodSpinner.setOnItemSelectedListener(this);
+            ArrayAdapter arrayAdapter;
+            if(Locale.getDefault().getDisplayLanguage().contains("it")) {
+                arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, itaPeriods);
+
+            } else {
+                arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, engPeriods);
+            }
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            periodSpinner.setAdapter(arrayAdapter);
         }
     }
 
     private void loadFullLeaderboard() {
-        final String url = "https://pwnedgame.azurewebsites.net/api/leaderboards/arcade?period="+PERIOD+"&limit="+MAX_SIZE;
+        final String url = "https://pwnedgame.azurewebsites.net/api/leaderboards/arcade?period="+period+"&limit="+MAX_SIZE;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 final int responseItems;
+                if(!fullList.isEmpty()){
+                    fullList.clear();
+                }
                 try {
                     JSONArray responseArray = response.getJSONArray("data");
                     responseItems = responseArray.length();
@@ -242,5 +264,16 @@ public class LeaderBoardsFragment extends Fragment {
 
     public RequestQueue getRequestQueue(){
         return this.requestQueue;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        this.period = engPeriods[position];
+        loadFullLeaderboard();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

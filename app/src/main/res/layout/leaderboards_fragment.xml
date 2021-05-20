@@ -37,6 +37,28 @@
         app:layout_constraintStart_toEndOf="@id/previousleaderboard"
         android:layout_marginStart="10dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/periodTextView"
+        android:text="@string/choose_period"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/nextleaderboard"
+        app:layout_constraintBottom_toBottomOf="@id/nextleaderboard"
+        app:layout_constraintStart_toEndOf="@id/nextleaderboard"
+        android:layout_marginStart="10dp"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/period_spinner"
+        app:layout_constraintTop_toTopOf="@id/previousleaderboard"
+        app:layout_constraintBottom_toBottomOf="@id/previousleaderboard"
+        app:layout_constraintStart_toEndOf="@id/periodTextView"
+        android:layout_marginStart="10dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
