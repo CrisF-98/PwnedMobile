@@ -22,6 +22,8 @@ import com.example.thepwnedgame.socketevents.SocketEventImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,7 @@ import java.util.Map;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.engineio.client.EngineIOException;
+import io.socket.engineio.client.transports.WebSocket;
 
 public class Utilities {
 
@@ -73,25 +76,26 @@ public class Utilities {
             headers.put("Authorization", Collections.singletonList(token));
             IO.Options options = IO.Options.builder()
                                     .setExtraHeaders(headers)
-                                    .setQuery(query)
+                                    //.setQuery(query)
+                                    .setAuth(Collections.singletonMap("token", jwt))
                                     .build();
-            Log.d("Options", options.query);
+            //Log.d("Options", options.query);
             socket = IO.socket("https://pwnedgame.azurewebsites.net/socket/arcade", options);
         }
         return socket;
     }
 
-    public static void eventHandler(Application application, GameActivity activity, String name, EventDispatcher eventDispatcher, Object... args)throws JSONException{
+    public static void eventHandler(Application application, GameActivity activity, String name, EventDispatcher eventDispatcher, Object... args)throws JSONException, EngineIOException{
         try{
             if (name.equals(Socket.EVENT_CONNECT_ERROR)){
-                Log.d("utilities", "line 87");
-                activity.runOnUiThread(() -> Toast.makeText(activity.getApplication(), "FATAL ERROR - CRASHING", Toast.LENGTH_SHORT).show());
+                Log.d("bug-event", name);
+                activity.getSocket().disconnect();
+                Log.d("utilities", "socket disconnected");
+                activity.getEventQueue().clear();
+                activity.finish();
+                //activity.runOnUiThread(() -> Toast.makeText(activity.getApplication(), "FATAL ERROR - CRASHING", Toast.LENGTH_SHORT).show());
                 /*Intent gameOverIntent = new Intent(activity, LoginActivity.class);
                 activity.startActivity(gameOverIntent);*/
-                activity.getSocket().disconnect();
-
-                Thread.sleep(Toast.LENGTH_SHORT);
-                activity.finish();
             } else {
                 eventDispatcher.getQueue().put(new SocketEventImpl(name, (JSONObject) args[0]));
             }

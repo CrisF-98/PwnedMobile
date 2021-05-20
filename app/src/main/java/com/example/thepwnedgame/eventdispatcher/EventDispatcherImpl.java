@@ -89,6 +89,7 @@ public class EventDispatcherImpl implements EventDispatcher{
             Log.d("Event dispatcher", "ERROR DETECTED");
             //pulisco la coda di eventi
             this.queue.clear();
+            //gameActivity.getCountdown().cancel();
             /*TokenHandlerSingleton.getInstance(activity.getApplication()).refreshToken();
             ((GameActivity) activity).logout();*/
         }

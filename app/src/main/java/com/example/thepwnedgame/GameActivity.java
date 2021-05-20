@@ -23,12 +23,14 @@ import com.example.thepwnedgame.viewmodel.ScoreViewModel;
 
 import org.json.JSONException;
 
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import io.socket.client.Manager;
 import io.socket.client.Socket;
+import io.socket.engineio.client.EngineIOException;
 
 
 public class GameActivity extends AppCompatActivity {
@@ -80,14 +82,14 @@ public class GameActivity extends AppCompatActivity {
         socket.on("guess", sArgs -> {
             try {
                 Utilities.eventHandler(getApplication(), this,"guess", this.eventDispatcher,  sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | EngineIOException e) {
                 e.printStackTrace();
             }
         });
         socket.on("on-error", sArgs -> {
             try {
                 Utilities.eventHandler(getApplication(), this,  "on-error", this.eventDispatcher, sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | EngineIOException e) {
                 e.printStackTrace();
             }
             /*finish();
@@ -96,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
         socket.on("game-end", sArgs -> {
             try {
                 Utilities.eventHandler(getApplication(), this, "game-end", this.eventDispatcher, sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | EngineIOException e) {
                 e.printStackTrace();
             }
         });
@@ -105,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
                 runOnUiThread(() -> Toast.makeText(getApplication(), "FATAL ERROR - CRASHING", Toast.LENGTH_SHORT));
                 Thread.sleep(100);
                 Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
-            } catch (ClassCastException | JSONException | InterruptedException e) {
+            } catch (ClassCastException | JSONException | InterruptedException | EngineIOException e) {
                 e.printStackTrace();
                 /*Intent gameOverIntent = new Intent(getApplicationContext(), GameOverActivity.class);
                 startActivity(gameOverIntent);
@@ -117,7 +119,7 @@ public class GameActivity extends AppCompatActivity {
         socket.on(Manager.EVENT_ERROR, sArgs -> {
             try {
                 Utilities.eventHandler(getApplication(), this,  Manager.EVENT_ERROR, this.eventDispatcher, sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | EngineIOException e) {
                 e.printStackTrace();
             }
             Log.d("GameActivity", "ERROR DETECTED");
@@ -125,7 +127,7 @@ public class GameActivity extends AppCompatActivity {
         socket.on("error", sArgs-> {
             try {
                 Utilities.eventHandler(getApplication(), this,  Socket.EVENT_CONNECT_ERROR, this.eventDispatcher, sArgs);
-            } catch (JSONException e) {
+            } catch (JSONException | EngineIOException e) {
                 e.printStackTrace();
             }
         });
@@ -143,10 +145,10 @@ public class GameActivity extends AppCompatActivity {
         //progress bar
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(100);
-        countdown = new BarCountdown(10000, 100, this) {
+        countdown = new BarCountdown(5000, 50, this) {
             @Override
             public void onTick(long millisUntilFinished) {
-                progressBar.setProgress((int) (millisUntilFinished/100));
+                progressBar.setProgress((int) (millisUntilFinished/50));
 
             }
 
@@ -200,15 +202,7 @@ public class GameActivity extends AppCompatActivity {
         return countdown;
     }
 
-    /*public void logout() {
-        //pulisco gli eventi
-        this.eventQueue.clear();
-        //this.recreate();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recreate();
-            }
-        });
-    }*/
+    public BlockingQueue<SocketEvent> getEventQueue(){
+        return this.eventQueue;
+    }
 }

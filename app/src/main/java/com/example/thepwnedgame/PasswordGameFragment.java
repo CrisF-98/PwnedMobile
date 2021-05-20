@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import io.socket.client.Socket;
+import io.socket.engineio.client.EngineIOException;
 import okhttp3.internal.Util;
 
 public class PasswordGameFragment extends Fragment {
