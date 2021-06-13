@@ -179,6 +179,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        /*Intent backToHome = new Intent(this, MainActivity.class);
+        startActivity(backToHome);*/
         this.finish();
         return true;
     }

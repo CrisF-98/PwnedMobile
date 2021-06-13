@@ -37,6 +37,7 @@ import com.example.thepwnedgame.leaderboards.LeaderboardAdapter;
 import com.example.thepwnedgame.leaderboards.LeaderboardManager;
 import com.example.thepwnedgame.leaderboards.ScoreItem;
 import com.example.thepwnedgame.viewmodel.LeaderboardViewModel;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -46,6 +47,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static android.view.View.GONE;
 
 public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
@@ -63,6 +66,7 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
     private List<ScoreItem> fullList = new ArrayList<>();
     private static final int MAX_SIZE = 1000;
     private String period = "forever";
+    CircularProgressIndicator progressIndicator;
 
     private final String[] engPeriods = {"forever", "day", "week", "month", "year"};
     private final String[] itaPeriods = {"sempre", "oggi", "settimana", "mese", "anno"};
@@ -80,6 +84,8 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
         this.page = 0;
         final Activity activity = getActivity();
         if (activity != null){
+            progressIndicator = view.findViewById(R.id.indicator);
+            //progressIndicator.setVisibility(View.VISIBLE);
             setRecyclerView(activity);
             leaderboardViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(LeaderboardViewModel.class);
             leaderboardViewModel.getScoreItems().observe((LifecycleOwner) activity, new Observer<List<ScoreItem>>() {
@@ -167,6 +173,7 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
 
     private void loadFullLeaderboard() {
         final String url = "https://pwnedgame.azurewebsites.net/api/leaderboards/arcade?period="+period+"&limit="+MAX_SIZE;
+        progressIndicator.show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -184,6 +191,7 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
                         position++;
                     }
                     unregisterNetworkCallback();
+                    progressIndicator.hide();
                     loadLeaderBoards(0);
                 } catch (JSONException e) {
                     e.printStackTrace();

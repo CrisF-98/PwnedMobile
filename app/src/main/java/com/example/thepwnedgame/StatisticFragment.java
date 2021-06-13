@@ -1,7 +1,9 @@
 package com.example.thepwnedgame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -30,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.thepwnedgame.leaderboards.ScoreItem;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +59,9 @@ public class StatisticFragment extends Fragment {
     private String userId;
     private String jwt;
     private String usernameString;
+    private String errorMessage;
+    private CircularProgressIndicator progressIndicator;
+    private int progress;
 
     @Nullable
     @Override
@@ -69,6 +75,7 @@ public class StatisticFragment extends Fragment {
         final Activity activity = getActivity();
         if (activity != null){
             if(Utilities.isUserLoggedIn(activity.getApplication())) {
+                progressIndicator = view.findViewById(R.id.indicator);
                 jwt = activity.getSharedPreferences("UserData", 0).getString("JWT", "");
                 Log.d("first jwt", jwt);
                 userId = activity.getSharedPreferences("UserData", 0).getString("id", "");
@@ -96,11 +103,15 @@ public class StatisticFragment extends Fragment {
             } else {
                 if(Locale.getDefault().getDisplayLanguage().contains("it")) {
                     String text = "Devi essere loggato per visualizzare le statistiche.";
-                    ((TextView) view.findViewById(R.id.helloTextView)).setText(text);
+                    //((TextView) view.findViewById(R.id.helloTextView)).setText(text);
+                    errorMessage = text;
                 } else {
                     String text = "You need to be logged in to view stats.";
-                    ((TextView) view.findViewById(R.id.helloTextView)).setText(text);
+                    //((TextView) view.findViewById(R.id.helloTextView)).setText(text);
+                    errorMessage = text;
                 }
+                buildDialog();
+                view.findViewById(R.id.helloTextView).setVisibility(GONE);
                 view.findViewById(R.id.usernameStatsTextView).setVisibility(GONE);
                 view.findViewById(R.id.yourAverageTextView).setVisibility(GONE);
                 view.findViewById(R.id.averagePoints).setVisibility(GONE);
@@ -122,6 +133,36 @@ public class StatisticFragment extends Fragment {
                 view.findViewById(R.id.thirdScore).setVisibility(GONE);
             }
         }
+    }
+
+    private void buildDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(errorMessage)
+                .setTitle("Stats")
+                .setPositiveButton(R.string.login, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent goToLogin = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(goToLogin);
+                        //getActivity().finish();
+                    }
+                })
+                .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.register, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent goToRegister = new Intent(getActivity(), RegisterActivity.class);
+                        startActivity(goToRegister);
+                        //getActivity().finish();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void loadscores(View view) {
@@ -183,14 +224,16 @@ public class StatisticFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                progress--;
+                if(progress==0){
+                    progressIndicator.hide();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("stats", "error");
                 jwt = getActivity().getSharedPreferences("UserData", 0).getString("JWT", "");
-                //TODO: richiesta di refresh, in onResponse rifare la richiesta
                 JSONObject body = new JSONObject();
                 try {
                     body.put("token", jwt);
@@ -287,6 +330,10 @@ public class StatisticFragment extends Fragment {
                             ((TextView)view.findViewById(R.id.highestComment)).setText(toDisplay);
                         }
                     }
+                    progress--;
+                    if(progress==0){
+                        progressIndicator.hide();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -351,6 +398,8 @@ public class StatisticFragment extends Fragment {
     }
 
     private void loadtop1000() {
+        progress = 3;
+        progressIndicator.show();
         final String url = "https://pwnedgame.azurewebsites.net/api/leaderboards/arcade?period="+PERIOD+"&limit=1000";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -365,6 +414,7 @@ public class StatisticFragment extends Fragment {
                         fullScores.add(new ScoreItem(position, item.getString("username"), item.getInt("score")));
                         position++;
                     }
+                    progress--;
                     loadstats(getView());
                     unregisterNetworkCallback();
                 } catch (JSONException e) {

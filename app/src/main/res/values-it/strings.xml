@@ -44,4 +44,5 @@
     <string name="have_fun">Divertiti!</string>
     <string name="got_it">OK</string>
     <string name="choose_period">"Scegli il periodo: "</string>
+    <string name="cancel">Cancella</string>
 </resources>
