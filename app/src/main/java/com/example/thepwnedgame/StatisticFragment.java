@@ -74,6 +74,7 @@ public class StatisticFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final Activity activity = getActivity();
         if (activity != null){
+            progressIndicator = view.findViewById(R.id.indicator);
             if(Utilities.isUserLoggedIn(activity.getApplication())) {
                 progressIndicator = view.findViewById(R.id.indicator);
                 jwt = activity.getSharedPreferences("UserData", 0).getString("JWT", "");
@@ -110,6 +111,7 @@ public class StatisticFragment extends Fragment {
                     //((TextView) view.findViewById(R.id.helloTextView)).setText(text);
                     errorMessage = text;
                 }
+                progressIndicator.hide();
                 buildDialog();
                 view.findViewById(R.id.helloTextView).setVisibility(GONE);
                 view.findViewById(R.id.usernameStatsTextView).setVisibility(GONE);

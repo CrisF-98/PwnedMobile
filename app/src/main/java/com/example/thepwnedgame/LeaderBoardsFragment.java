@@ -173,6 +173,7 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
 
     private void loadFullLeaderboard() {
         final String url = "https://pwnedgame.azurewebsites.net/api/leaderboards/arcade?period="+period+"&limit="+MAX_SIZE;
+        recyclerView.setVisibility(GONE);
         progressIndicator.show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -191,6 +192,7 @@ public class LeaderBoardsFragment extends Fragment implements AdapterView.OnItem
                         position++;
                     }
                     unregisterNetworkCallback();
+                    recyclerView.setVisibility(View.VISIBLE);
                     progressIndicator.hide();
                     loadLeaderBoards(0);
                 } catch (JSONException e) {
